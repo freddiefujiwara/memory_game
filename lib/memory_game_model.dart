@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -48,12 +50,26 @@ class MemoryGameModel extends ChangeNotifier {
     print("INIT");
   }
 
-  get currentOpenedIndex => this._currentOpenedIndex;
   void open(int index) {
     if (this._icons[index].icon.codePoint ==
         Icon(Icons.bug_report).icon.codePoint) {
-      this._initialize();
+      this._answers = <bool>[
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ];
       notifyListeners();
+      print("GAME OVER");
+      Timer(Duration(seconds: 1), () {
+        this._initialize();
+        notifyListeners();
+      });
       return;
     }
     if (this._answers[index]) {
